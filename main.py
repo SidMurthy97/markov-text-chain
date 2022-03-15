@@ -12,6 +12,9 @@ class state:
         else:
             self.next_states[self.next_state] = 1
 
+    def compute_probabilites():
+        pass
+
 test_input = "the the something blah"
 
 if __name__ == "__main__":
@@ -33,10 +36,12 @@ if __name__ == "__main__":
         if word not in words2index.keys():
             current = state(word)
             words2index[word] = i # keep a record of all the words and relevant indices 
+            states.append(current)
+            
         else:
             current.next_state = word
             current.update_state()
             
-        states.append(current)
+        
         
         
