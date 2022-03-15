@@ -12,9 +12,10 @@ class state:
         else:
             self.next_states[self.next_state] = 1
 
-test_input = "The cat and the dog are animals on Earth"
+test_input = "the the something blah"
 
 if __name__ == "__main__":
+    words2index = {}
     states = []
     word_list = test_input.split()
     
@@ -25,11 +26,17 @@ if __name__ == "__main__":
             current = state(word)
         
         else:
+            
+            current.next_state = word
+            current.update_state()
+        
+        if word not in words2index.keys():
+            current = state(word)
+            words2index[word] = i # keep a record of all the words and relevant indices 
+        else:
             current.next_state = word
             current.update_state()
             
-            current = state(word)
-
         states.append(current)
         
         
