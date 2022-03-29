@@ -10,37 +10,41 @@ class state:
         if self.next_state in self.next_states: #if state already exists
             self.next_states[self.next_state] += 1
         else:
-            self.next_states[self.next_state] = 1
+            self.next_states[self.next_state] = 1 #initialise the count if word doesnt exist
 
     def compute_probabilites():
         pass
 
-test_input = "the the something blah"
 
 if __name__ == "__main__":
+    
+    #some test input
+    test_input = "the the something blah"
+    word_list = test_input.split()
+
+
+    #initialise dictionaries and lists
     words2index = {}
     states = []
-    word_list = test_input.split()
     
-    for i,word in enumerate(tqdm(word_list)):
+    
+    for i,word in enumerate(tqdm(word_list)): #loop over all words and make the chain 
         
-        if i == 0:
+        if i == 0: #skip the first iteration
         
-            current = state(word)
-        
-        else:
+            current_word = state(word)
             
-            current.next_state = word
-            current.update_state()
-        
-        if word not in words2index.keys():
-            current = state(word)
-            words2index[word] = i # keep a record of all the words and relevant indices 
-            states.append(current)
+        else: #assign the next state to each word and update the count
             
-        else:
-            current.next_state = word
-            current.update_state()
+            next_word = state(word)
+            current_word.next_state = next_word
+            
+            current_word = next_word
+        
+
+        states.append(current_word)
+            
+
             
         
         
