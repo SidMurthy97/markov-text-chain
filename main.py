@@ -6,12 +6,13 @@ class state:
         self.next_state = None
         self.next_states = {}
     
-    def update_state(self):
-        if self.next_state in self.next_states: #if state already exists
-            self.next_states[self.next_state] += 1
-        else:
-            self.next_states[self.next_state] = 1 #initialise the count if word doesnt exist
+    def __update_state__(self):
+        pass
 
+    def add_state(self,next_state):
+        self.next_state = next_state
+        self.__update_state__()
+    
     def compute_probabilites():
         pass
 
@@ -19,7 +20,7 @@ class state:
 if __name__ == "__main__":
     
     #some test input
-    test_input = "the the something blah"
+    test_input = "the quick brown fox"
     word_list = test_input.split()
 
 
@@ -37,7 +38,7 @@ if __name__ == "__main__":
         else: #assign the next state to each word and update the count
             
             next_word = state(word)
-            current_word.next_state = next_word
+            current_word.add_state(next_word)
             
             current_word = next_word
         
