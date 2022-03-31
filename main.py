@@ -49,7 +49,7 @@ if __name__ == "__main__":
             #print(previous_state.value, current_state.value)
         previous_state = current_state
     
-    assert seen_words[0].next_states[quick] == 2
+    assert seen_words["the"].next_states["quick"] == 2
 
             
         
