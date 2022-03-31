@@ -18,11 +18,15 @@ class state:
     def compute_probabilites():
         pass
 
+def print_raw_chain(object_dict):
+    for word in object_dict:
+        print(seen_words[word].value, seen_words[word].next_states)
 
 if __name__ == "__main__":
     
     #some test input
-    test_input = "the quick brown the change the quick end"
+    input_file = open(r"C:\Users\Sid Murthy\Documents\projects\markov-text-chain\input.txt")
+    test_input = input_file.read()
     word_list = test_input.split()
 
 
@@ -48,10 +52,9 @@ if __name__ == "__main__":
         
             #print(previous_state.value, current_state.value)
         previous_state = current_state
-    
-    assert seen_words["the"].next_states["quick"] == 2
 
-            
+    print_raw_chain(seen_words)
+
         
         
         
