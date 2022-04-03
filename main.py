@@ -5,6 +5,7 @@ class state:
         self.value = state_value
         self.next_state = None
         self.next_states = {}
+        self.prob_to_state = {}
     
     def __update_state__(self):
         pass
@@ -15,9 +16,19 @@ class state:
         else:
             self.next_states[next_state.value] = 1
     
-    def compute_probabilites():
-        pass
+    def compute_probabilites(self):
+        #this function computes the probability of going into one of the next states
 
+        possible_non_unique_states = 0
+
+        for key in self.next_states.keys(): #find total sum 
+            possible_non_unique_states += self.next_states[key]
+
+        for key in self.next_states.keys(): #compute the probabilities
+            self.prob_to_state[key] = self.next_states[key] / possible_non_unique_states
+
+
+        return self.prob_to_state
 def print_raw_chain(object_dict):
     for word in object_dict:
         print(seen_words[word].value, seen_words[word].next_states)
