@@ -1,38 +1,48 @@
 from tqdm import trange, tqdm
-
+import random
 class state:
     def __init__(self, state_value):
         self.value = state_value
-        self.next_state = None
-        self.next_states = {}
-        self.prob_to_state = {}
+        self.state_to_add = None
+        self.next_states_raw = {}
+        self.dict_prob_to_state = {}
+
+        self.next_states, self.probability_to_state = [],[]
     
     def __update_state__(self):
         pass
 
-    def add_state(self,next_state):
-        if next_state.value in self.next_states:
-            self.next_states[next_state.value] += 1
+    def add_state(self,state_to_add):
+        if state_to_add.value in self.next_states_raw:
+            self.next_states_raw[state_to_add.value] += 1
         else:
-            self.next_states[next_state.value] = 1
+            self.next_states_raw[state_to_add.value] = 1
     
     def compute_probabilites(self):
         #this function computes the probability of going into one of the next states
 
         possible_non_unique_states = 0
 
-        for key in self.next_states.keys(): #find total sum 
-            possible_non_unique_states += self.next_states[key]
+        for key in self.next_states_raw.keys(): #find total sum 
+            possible_non_unique_states += self.next_states_raw[key]
 
-        for key in self.next_states.keys(): #compute the probabilities
-            self.prob_to_state[key] = self.next_states[key] / possible_non_unique_states
+        for key in self.next_states_raw.keys(): #compute the probabilities
+            self.dict_prob_to_state[key] = self.next_states_raw[key] / possible_non_unique_states
+            self.next_states.append(key)
+            self.probability_to_state.append(self.dict_prob_to_state[key])
 
+        return self.dict_prob_to_state
 
-        return self.prob_to_state
+    def pick_next_state(self):
+        """ this function will randomly choose the value of the next state in the \\
+            chain during execution"""
+        return random.choices(self.next_states, self.probability_to_state)[0]
+        
+
 
 def print_raw_chain(object_dict):
     for word in object_dict:
-        print(seen_words[word].value, seen_words[word].prob_to_state)
+        print(seen_words[word].value, seen_words[word].dict_prob_to_state)
 
 if __name__ == "__main__":
     
@@ -68,6 +78,11 @@ if __name__ == "__main__":
 
     for word in seen_words:
         seen_words[word].compute_probabilites()
+
+    #execute the chain 
+
+
+
 
     print_raw_chain(seen_words)
 
