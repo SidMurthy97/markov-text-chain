@@ -81,10 +81,18 @@ if __name__ == "__main__":
 
     #execute the chain 
 
+    input_word = "I'm"
+    sentence_length = 20
+    print(input_word)
+    
+    for _ in range(sentence_length):
+        current_state = seen_words[input_word]
+        input_word = current_state.pick_next_state()
+        print(input_word)
 
 
 
-    print_raw_chain(seen_words)
+    # print_raw_chain(seen_words)
 
         
         
