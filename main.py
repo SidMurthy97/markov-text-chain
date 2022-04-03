@@ -29,9 +29,10 @@ class state:
 
 
         return self.prob_to_state
+
 def print_raw_chain(object_dict):
     for word in object_dict:
-        print(seen_words[word].value, seen_words[word].next_states)
+        print(seen_words[word].value, seen_words[word].prob_to_state)
 
 if __name__ == "__main__":
     
@@ -44,7 +45,8 @@ if __name__ == "__main__":
     #initialise dictionaries and lists
     seen_words = {}
     current_state,previous_state = None, None
-    
+
+    #making the chain     
     for i,word in enumerate(tqdm(word_list)): #loop over all words and make the chain 
         
         current_state = state(word)
@@ -63,6 +65,9 @@ if __name__ == "__main__":
         
             #print(previous_state.value, current_state.value)
         previous_state = current_state
+
+    for word in seen_words:
+        seen_words[word].compute_probabilites()
 
     print_raw_chain(seen_words)
 
