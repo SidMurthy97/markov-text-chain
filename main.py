@@ -59,6 +59,7 @@ if __name__ == "__main__":
 
     #initialise dictionaries and lists
     seen_words = {}
+    starting_words = []
     current_state,previous_state = None, None
 
     #making the chain     
@@ -76,6 +77,10 @@ if __name__ == "__main__":
             if previous_state.value not in seen_words:
                 previous_state.add_state(current_state)
                 seen_words[previous_state.value] = previous_state
+
+                if previous_state.value[0].isupper(): #is first letter is capital
+                    starting_words.append(previous_state.value)
+    
             else:
                 seen_words[previous_state.value].add_state(current_state)
         
@@ -87,7 +92,7 @@ if __name__ == "__main__":
 
     #execute the chain 
 
-    input_word = "I'm"
+    input_word = random.choice(starting_words) #choose random starting word
     sentence_length = 20
     print(input_word)
     
