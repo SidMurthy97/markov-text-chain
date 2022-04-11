@@ -96,7 +96,7 @@ if __name__ == "__main__":
     input_word = random.choice(starting_words) #choose random starting word
     output_str = ""
     while input_word != ".":
-        output_str += input_word
+        output_str += " " + input_word
         current_state = seen_words[input_word]
         input_word = current_state.pick_next_state()
     
