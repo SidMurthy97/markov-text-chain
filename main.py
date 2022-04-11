@@ -53,7 +53,7 @@ if __name__ == "__main__":
     
     #some test input
     input_file = \
-        open(r"C:\Users\Sid Murthy\Documents\projects\markov-text-chain\input.txt")
+        open(r"C:\Users\Sid Murthy\Documents\projects\markov-text-chain\harry_potter.txt", encoding="utf8")
     test_input = input_file.read()
     word_list =  re.findall(r"[\w']+|[.,!?;]", test_input) #split all word and \
                                                            # punctuation 
@@ -94,14 +94,15 @@ if __name__ == "__main__":
     #execute the chain 
 
     input_word = random.choice(starting_words) #choose random starting word
-    sentence_length = 20
-    print(input_word)
-    
-    for _ in range(sentence_length):
+    output_str = ""
+    while input_word != ".":
+        output_str += input_word
         current_state = seen_words[input_word]
         input_word = current_state.pick_next_state()
-        print(input_word)
+    
+    output_str += "."
 
+    print(output_str)
 
 
     # print_raw_chain(seen_words)
