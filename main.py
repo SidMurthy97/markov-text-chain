@@ -41,72 +41,65 @@ class state:
             the chain during execution"""
         return random.choices(self.next_states, self.probability_to_state)[0]
         
+class MarkovChain:
 
-
-def print_raw_chain(object_dict):
-    """Test function"""
+    def __init__(self, input):
+        #initialise dictionaries and lists
+        self.input_dataset = input 
+        self.seen_words = {}
+        self.starting_words = []
+        self.current_state,self.previous_state = None, None
     
-    for word in object_dict:
-        print(seen_words[word].value, seen_words[word].dict_prob_to_state)
+    def make_chain(self):
+     
+        for i,word in enumerate(tqdm(self.input_dataset)): #loop over all words and make \\
+                                                #the chain             
+            self.current_state = state(word)
+
+            if i == 0:
+                #seen_words[word] = current_state
+                pass
+            
+            else:
+                
+                if self.previous_state.value not in self.seen_words:
+                    self.previous_state.add_state(self.current_state)
+                    self.seen_words[self.previous_state.value] = self.previous_state
+
+                    if self.previous_state.value[0].isupper(): #is first letter is capital
+                        self.starting_words.append(self.previous_state.value)
+        
+                else:
+                    self.seen_words[self.previous_state.value].add_state(self.current_state)
+            
+                #print(self.previous_state.value, self.current_state.value)
+            self.previous_state = self.current_state
+
+        for word in self.seen_words:
+            self.seen_words[word].compute_probabilites()
+
+    def generate_output(self):
+        input_word = random.choice(self.starting_words) #choose random starting word
+        output_str = ""
+        while input_word != ".":
+            output_str += " " + input_word
+            current_state = self.seen_words[input_word]
+            input_word = current_state.pick_next_state()
+        
+        output_str += "."
+
+        print(output_str)
+
 
 if __name__ == "__main__":
     
     #some test input
     input_file = \
-        open(r"C:\Users\Sid Murthy\Documents\projects\markov-text-chain\harry_potter.txt", encoding="utf8")
+        open(r"C:\Users\Sid Murthy\Documents\projects\markov-text-chain\datasets\harry_potter.txt", encoding="utf8")
     test_input = input_file.read()
     word_list =  re.findall(r"[\w']+|[.,!?;]", test_input) #split all word and \
                                                            # punctuation 
 
-    #initialise dictionaries and lists
-    seen_words = {}
-    starting_words = []
-    current_state,previous_state = None, None
-
-    #making the chain     
-    for i,word in enumerate(tqdm(word_list)): #loop over all words and make \\
-                                              #the chain 
-        
-        current_state = state(word)
-
-        if i == 0:
-            #seen_words[word] = current_state
-            pass
-        
-        else:
-            
-            if previous_state.value not in seen_words:
-                previous_state.add_state(current_state)
-                seen_words[previous_state.value] = previous_state
-
-                if previous_state.value[0].isupper(): #is first letter is capital
-                    starting_words.append(previous_state.value)
-    
-            else:
-                seen_words[previous_state.value].add_state(current_state)
-        
-            #print(previous_state.value, current_state.value)
-        previous_state = current_state
-
-    for word in seen_words:
-        seen_words[word].compute_probabilites()
-
-    #execute the chain 
-
-    input_word = random.choice(starting_words) #choose random starting word
-    output_str = ""
-    while input_word != ".":
-        output_str += " " + input_word
-        current_state = seen_words[input_word]
-        input_word = current_state.pick_next_state()
-    
-    output_str += "."
-
-    print(output_str)
-
-
-    # print_raw_chain(seen_words)
-
-        
-        
-        
+    mc = MarkovChain(word_list)
+    mc.make_chain()
+    mc.generate_output()
