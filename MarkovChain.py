@@ -44,14 +44,14 @@ class state:
 class MarkovChain:
 
     def __init__(self, input):
-        #initialise dictionaries and lists
-        self.input_dataset = input 
+        '''initialise the class with an input string'''
         self.seen_words = {}
         self.starting_words = []
         self.current_state,self.previous_state = None, None
-    
+        self.input_dataset =  re.findall(r"[\w']+|[.,!?;]", input)
+         
     def make_chain(self):
-     
+        
         for i,word in enumerate(tqdm(self.input_dataset)): #loop over all words and make \\
                                                 #the chain             
             self.current_state = state(word)
@@ -77,6 +77,8 @@ class MarkovChain:
 
         for word in self.seen_words:
             self.seen_words[word].compute_probabilites()
+        
+        return self.seen_words 
 
     def generate_output(self):
         input_word = random.choice(self.starting_words) #choose random starting word
