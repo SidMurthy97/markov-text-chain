@@ -1,4 +1,4 @@
-from src.MarkovChain import MarkovChain
+from src.markovchain import MarkovChain
 
 def test_chain():
     '''This tests is the chain is generated correctly for perfect input
