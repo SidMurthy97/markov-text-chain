@@ -51,7 +51,7 @@ class MarkovChain:
         self.starting_words = []
         self.current_state,self.previous_state = None, None
         self.input_dataset =  re.findall(r"[\w']+|[.,!?;]", input)
-         
+        self.input_dataset.append(" ") #append blank space so the whole list is iterated
     def make_chain(self):
         
         for i,word in enumerate(tqdm(self.input_dataset)): #loop over all words and make \\
