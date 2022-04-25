@@ -1,4 +1,4 @@
-from MarkovChain import MarkovChain
+from src.MarkovChain import MarkovChain
 
 def test_chain():
     '''This tests is the chain is generated correctly for perfect input
@@ -6,7 +6,7 @@ def test_chain():
     input_string = "The quick brown fox jumps over the lazy dog."
 
     mc = MarkovChain(input_string)
-    seen_words, starting_words = mc.make_chain()
+    seen_words = mc.make_chain()
     mc.generate_output()
 
     assert True == True
