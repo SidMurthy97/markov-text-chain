@@ -1,6 +1,8 @@
 from tqdm import trange, tqdm
 import random
 import re
+
+'''TODO: The last word is left out in the current architecture'''
 class state:
     def __init__(self, state_value):
         self.value = state_value
