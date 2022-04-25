@@ -1,7 +1,7 @@
 from tqdm import trange, tqdm
 import random
 import re
-from MarkovChain import MarkovChain
+from markovchain import MarkovChain
 
 if __name__ == "__main__":
     
