@@ -20,5 +20,22 @@ def test_make_chain_with_duplicate_words():
     pass
 
 def test_starting_words():
-    pass
+    '''This test checks whether capitalised words are recognised as starting
+    words'''
+    input_string = "This is a sentence. Another sentence. Ending sentence."
+    expected_output = ["This","Another","Ending"]
+    mc = MarkovChain(input_string)
+    mc.make_chain()
 
+    assert mc.starting_words == expected_output
+
+def test_starting_words_for_proper_nouns():
+    '''This test checks whether only the start of a sentence is deemed a staring
+    word'''
+    input_string = "I just went to Venice. That was fun."
+    expected_output = ["I","That"]
+    
+    mc = MarkovChain(input_string)
+    mc.make_chain()
+
+    assert mc.starting_words == expected_output
