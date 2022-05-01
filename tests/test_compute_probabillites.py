@@ -20,6 +20,4 @@ def test_unique_chain():
         
 
 def test_nonunique_chain():
-    '''Test that probabilities are computed correctly when input is make of
-    unique words'''
     pass

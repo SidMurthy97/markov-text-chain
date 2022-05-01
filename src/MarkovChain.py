@@ -2,7 +2,8 @@ from tqdm import trange, tqdm
 import random
 import re
 
-'''TODO: The last word is left out in the current architecture'''
+'''TODO: The last word is left out in the current architecture. Also true for 
+the computed probabily dictionary.'''
 class state:
     def __init__(self, state_value):
         self.value = state_value
@@ -52,6 +53,7 @@ class MarkovChain:
         self.current_state,self.previous_state = None, None
         self.input_dataset =  re.findall(r"[\w']+|[.,!?;]", input)
         self.input_dataset.append(" ") #append blank space so the whole list is iterated
+    
     def make_chain(self):
         
         for i,word in enumerate(tqdm(self.input_dataset)): #loop over all words and make \\
