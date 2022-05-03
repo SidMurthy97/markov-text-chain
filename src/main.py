@@ -14,4 +14,4 @@ if __name__ == "__main__":
 
     mc = MarkovChain(test_input)
     mc.make_chain()
-    mc.generate_output()
+    mc.generate_output(n_sentences=5)

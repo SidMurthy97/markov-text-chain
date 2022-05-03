@@ -93,14 +93,17 @@ class MarkovChain:
         
         return self.seen_words 
 
-    def generate_output(self):
-        input_word = random.choice(self.starting_words) #choose random starting word
+    def generate_output(self, n_sentences):
         output_str = ""
-        while input_word != ".":
-            output_str += " " + input_word
-            current_state = self.seen_words[input_word]
-            input_word = current_state.pick_next_state()
-        
-        output_str += "."
+        for _ in range(n_sentences):
+            
+            input_word = random.choice(self.starting_words) #choose random starting word
+
+            while input_word != ".":
+                output_str += " " + input_word
+                current_state = self.seen_words[input_word]
+                input_word = current_state.pick_next_state()
+            
+            output_str += "."
 
         print(output_str)
