@@ -53,7 +53,21 @@ class MarkovChain:
         self.current_state,self.previous_state = None, None
         self.input_dataset =  re.findall(r"[\w']+|[.,!?;]", input)
         self.input_dataset.append(" ") #append blank space so the whole list is iterated
-    
+        self.sentence_end = False
+    def check_if_start_of_sentence(self):
+        '''This function sets a flag is an ending punctiation is encountered
+        and records the next word in the starting words list'''
+        word = self.previous_state.value
+        
+        if self.sentence_end: #first check if sentence has ended
+            self.starting_words.append(word) #add word if it has
+            self.sentence_end = False #reset the flag
+        
+        if word == "." or word == "!" or word == "?": #set flag if ended            
+            self.sentence_end = True
+
+        
+
     def make_chain(self):
         
         for i,word in enumerate(tqdm(self.input_dataset)): #loop over all words and make \\
@@ -61,8 +75,8 @@ class MarkovChain:
             self.current_state = state(word)
 
             if i == 0:
-                #seen_words[word] = current_state
-                pass
+                #Register first word as starting word
+                self.starting_words.append(self.current_state.value)
             
             else:
                 
@@ -70,12 +84,12 @@ class MarkovChain:
                     self.previous_state.add_state(self.current_state)
                     self.seen_words[self.previous_state.value] = self.previous_state
 
-                    if self.previous_state.value[0].isupper(): #is first letter is capital
-                        self.starting_words.append(self.previous_state.value)
+                    # if self.previous_state.value[0].isupper(): #is first letter is capital
+                    #     self.starting_words.append(self.previous_state.value)
         
                 else:
                     self.seen_words[self.previous_state.value].add_state(self.current_state)
-            
+                self.check_if_start_of_sentence()
                 #print(self.previous_state.value, self.current_state.value)
             self.previous_state = self.current_state
 
