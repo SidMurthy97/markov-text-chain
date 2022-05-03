@@ -17,13 +17,14 @@ def test_make_chain_with_perfect_input():
     assert list(seen_words.keys()) == expected_output
 
 def test_make_chain_with_duplicate_words():
-    pass
+    '''This test checks if each word is a unique state even when a word is 
+    duplicated'''
 
 def test_starting_words():
     '''This test checks whether capitalised words are recognised as starting
     words'''
-    input_string = "This is a sentence. Another sentence. Ending sentence."
-    expected_output = ["This","Another","Ending"]
+    input_string = "This is a sentence. Another sentence! Ending sentence? Maybe not."
+    expected_output = ["This","Another","Ending", "Maybe"]
     mc = MarkovChain(input_string)
     mc.make_chain()
 
@@ -34,7 +35,7 @@ def test_starting_words_for_proper_nouns():
     word'''
     input_string = "I just went to Venice. That was fun."
     expected_output = ["I","That"]
-    
+
     mc = MarkovChain(input_string)
     mc.make_chain()
 

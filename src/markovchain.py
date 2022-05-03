@@ -54,6 +54,7 @@ class MarkovChain:
         self.input_dataset =  re.findall(r"[\w']+|[.,!?;]", input)
         self.input_dataset.append(" ") #append blank space so the whole list is iterated
         self.sentence_end = False
+    
     def check_if_start_of_sentence(self):
         '''This function sets a flag is an ending punctiation is encountered
         and records the next word in the starting words list'''
@@ -65,8 +66,6 @@ class MarkovChain:
         
         if word == "." or word == "!" or word == "?": #set flag if ended            
             self.sentence_end = True
-
-        
 
     def make_chain(self):
         
@@ -82,11 +81,7 @@ class MarkovChain:
                 
                 if self.previous_state.value not in self.seen_words:
                     self.previous_state.add_state(self.current_state)
-                    self.seen_words[self.previous_state.value] = self.previous_state
-
-                    # if self.previous_state.value[0].isupper(): #is first letter is capital
-                    #     self.starting_words.append(self.previous_state.value)
-        
+                    self.seen_words[self.previous_state.value] = self.previous_state        
                 else:
                     self.seen_words[self.previous_state.value].add_state(self.current_state)
                 self.check_if_start_of_sentence()
